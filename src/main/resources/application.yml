@@ -1,18 +1,26 @@
 
 spring:
   datasource:
+
+    url: jdbc:mariadb://turi-db.crnshyl5ky2g.us-east-1.rds.amazonaws.com:3306/turi?serverTimezone=UT
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/turi?serverTimezone=Asia/Seoul
-    username: root
-    password: 1234
+    username: vegielcl
+    password: akvkenqn12
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
-      use-new-id-generate-mappings: false
+      ddl-auto: none
+      #use-new-id-generate-mappings: false
     show-sql: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true
+        #temp:
+          #use_jdbc_metadata_defaults: false
+    generate-ddl: true
   session:
     jdbc:
       initialize-schema: always
+  #main:
+    #web-application-type: none
