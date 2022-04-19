@@ -31,6 +31,8 @@ public class User implements UserDetails {
 
     private String nickname;
 
+    private String profileImageUrl;
+
     private String auth;
 
     @Override
