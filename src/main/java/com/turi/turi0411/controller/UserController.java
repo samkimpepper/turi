@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,7 +59,14 @@ public class UserController {
     }
 
     @GetMapping("/session-test")
-    public String sessionTest() {
+    public String sessionTest(HttpServletRequest request) {
+        String requestUri = request.getRequestURI();
+        Enumeration<String> enumeration = request.getHeaderNames();
+        while(enumeration.hasMoreElements()) {
+            String name = enumeration.nextElement();
+            System.out.println(name + ":" + request.getHeader(name));
+        }
+
         return "여기는 로그인한 사람만 들어올 수 있는 페이지야";
     }
 }

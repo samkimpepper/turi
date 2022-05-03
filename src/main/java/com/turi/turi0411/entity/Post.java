@@ -13,16 +13,30 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PostType type;
+
+    private float x;
+
+    private float y;
+
+    private String roadAddress;
+
+    private String jibunAddress;
+
+    private String placeName;
 
 }

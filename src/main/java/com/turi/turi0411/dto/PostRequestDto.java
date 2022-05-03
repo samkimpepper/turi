@@ -9,5 +9,11 @@ public class PostRequestDto {
     @Setter
     public static class Save {
         private String content;
+        private String type;
+        private float x;
+        private float y;
+        private String roadAddress;
+        private String jibunAddress;
+        private String placeName;
     }
 }

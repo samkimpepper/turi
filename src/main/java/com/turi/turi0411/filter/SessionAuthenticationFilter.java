@@ -32,6 +32,24 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if(!PatternMatchUtils.simpleMatch(whitelist, requestUri)) {
+
+            while(enumeration.hasMoreElements()) {
+                String name = enumeration.nextElement();
+                if(name.equals("cookie")) {
+                    String sessionValue = request.getHeader(name);
+                    log.info(sessionValue);
+                    sessionValue = sessionValue.substring(8);
+                    log.info(sessionValue);
+                    String[] val = sessionValue.split(";");
+                    sessionValue = val[0].substring(0, val.length - 1);
+                    log.info(sessionValue);
+
+                    log.info("세션값 검증하기 위해 확인좀; "+session.getAttribute(SESSION_ID));
+                    break;
+                }
+
+            }
+
             if(session == null || session.getAttribute(SESSION_ID) == null) {
                 log.info("SessionFilter임, 인증 안 된 사용자의 요청임 {} ", request.getRequestURI());
 
