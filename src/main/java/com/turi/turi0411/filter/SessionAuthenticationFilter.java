@@ -25,27 +25,31 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String requestUri = request.getRequestURI();
+
         Enumeration<String> enumeration = request.getHeaderNames();
         while(enumeration.hasMoreElements()) {
             String name = enumeration.nextElement();
             if(name.equals("cookie")) {
                 String sessionValue = request.getHeader(name);
-                log.info(sessionValue);
+                log.info("첫번째: " + sessionValue);
                 sessionValue = sessionValue.substring(8);
-                log.info(sessionValue);
+                log.info("두번째: " + sessionValue);
                 String[] val = sessionValue.split(";");
                 sessionValue = val[0].substring(0, val.length - 1);
-                log.info(sessionValue);
+                log.info("세번째: " + sessionValue);
 
-                log.info("세션값 검증하기 위해 확인좀; "+session.getAttribute(SESSION_ID));
                 break;
             }
         }
 
-        if(!PatternMatchUtils.simpleMatch(whitelist, requestUri)) {
+        if(session != null && session.getAttribute(SESSION_ID) != null) {
+            log.info("세션값 검증하기 위해 확인좀; "+session.getAttribute(SESSION_ID));
+        }
 
+        if(!PatternMatchUtils.simpleMatch(whitelist, requestUri)) {
             if(session == null || session.getAttribute(SESSION_ID) == null) {
                 log.info("SessionFilter임, 인증 안 된 사용자의 요청임 {} ", request.getRequestURI());
+
 
                 //response.sendRedirect("/user/login?redirectURL=" + request.getRequestURI());
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "세션필터임 ㅇㅈ안된 사용자 요청");
