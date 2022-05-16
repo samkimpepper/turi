@@ -11,7 +11,7 @@ public class PostRequestDto {
     public static class Save {
         private String content;
         private String type;
-        private MultipartFile[] images;
+        //private MultipartFile[] images;
         private float x;
         private float y;
         private String roadAddress;
