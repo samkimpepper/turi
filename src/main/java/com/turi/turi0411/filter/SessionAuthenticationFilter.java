@@ -42,6 +42,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
+
         if(session != null && session.getAttribute(SESSION_ID) != null) {
             log.info("세션값 검증하기 위해 확인좀; "+session.getAttribute(SESSION_ID));
         }

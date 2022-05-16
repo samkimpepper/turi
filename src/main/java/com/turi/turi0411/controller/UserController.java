@@ -49,6 +49,7 @@ public class UserController {
     @GetMapping("/test")
     public ResponseDto.Default test(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
+
         log.info("유저컨트롤러!!!! 세션 !!! " + session.getAttribute("loginUser"));
         log.info("시큐리티컨텍스트 확인!!" + SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseDto.Default.builder()

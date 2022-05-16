@@ -1,6 +1,7 @@
 package com.turi.turi0411.controller;
 
 import com.turi.turi0411.dto.PostRequestDto;
+import com.turi.turi0411.dto.PostResponseDto;
 import com.turi.turi0411.dto.ResponseDto;
 import com.turi.turi0411.entity.User;
 import com.turi.turi0411.service.PostService;
@@ -16,9 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseDto.Default create(@RequestBody PostRequestDto.Save save,
                                       @AuthenticationPrincipal User user) {
         return postService.create(save, user);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseDto.Data<PostResponseDto.Single> postInfo(@PathVariable(name = "postId") Long postId) {
+        return new ResponseDto.Data<>(postService.postInfo(postId), "성공");
     }
 }

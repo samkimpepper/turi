@@ -69,4 +69,9 @@ public class UserService{
         return responseDto.success("로그인 성공");
     }
 
+    public User findByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        return userOptional.orElse(null);
+    }
+
 }
