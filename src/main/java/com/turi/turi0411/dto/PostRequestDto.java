@@ -10,7 +10,7 @@ public class PostRequestDto {
     @Setter
     public static class Save {
         private String content;
-        private String type;
+        private String postType;
         //private MultipartFile[] images;
         private float x;
         private float y;
