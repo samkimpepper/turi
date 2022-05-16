@@ -34,7 +34,7 @@ public class PostService {
                 .type(PostType.valueOf(postType))
                 .placeName(save.getPlaceName())
                 .roadAddress(save.getRoadAddress())
-                .jibunAddress("없는듯")
+                .jibunAddress(save.getJibunAddress())
                 .x(save.getX())
                 .y(save.getY())
                 .build();

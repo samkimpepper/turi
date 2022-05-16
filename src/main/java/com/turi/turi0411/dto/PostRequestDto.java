@@ -15,7 +15,7 @@ public class PostRequestDto {
         private float x;
         private float y;
         private String roadAddress;
-        //private String jibunAddress;
+        private String jibunAddress;
         private String placeName;
     }
 }
