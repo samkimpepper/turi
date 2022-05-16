@@ -23,7 +23,7 @@ public class PostService {
 
     @Transactional
     public ResponseDto.Default create(PostRequestDto.Save save, User user) {
-        String postType = save.getType();
+        String postType = save.getPostType();
         if(!postType.equals("food") && !postType.equals("enjoy") && !postType.equals("stay")) {
             return responseDto.fail("postType 값이 잘못됐음: " + postType, HttpStatus.BAD_REQUEST);
         }
