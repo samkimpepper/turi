@@ -1,6 +1,7 @@
 package com.turi.turi0411.service;
 
-import com.turi.turi0411.dto.UserRequestDto;
+import com.turi.turi0411.config.s3.S3Uploader;
+import com.turi.turi0411.dto.user.UserRequestDto;
 import com.turi.turi0411.dto.ResponseDto;
 import com.turi.turi0411.entity.User;
 import com.turi.turi0411.repository.UserRepository;
@@ -12,10 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class UserService{
     private final PasswordEncoder passwordEncoder;
     private final ResponseDto responseDto;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final S3Uploader s3Uploader;
 
     @Transactional
     public ResponseDto.Default save(UserRequestDto.SignUp signUp) {
@@ -76,6 +80,39 @@ public class UserService{
     public User findByEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         return userOptional.orElse(null);
+    }
+
+    // 프사, 닉네임 변경
+    @Transactional
+    public ResponseDto.Default updateUserInfo(MultipartFile file, String nickname, String email) {
+        User user = findByEmail(email);
+        if(user == null) {
+            return responseDto.fail("존재하지 않는 유저 이메일", HttpStatus.NOT_FOUND);
+        }
+
+        if(nickname != null) {
+            user.setNickname(nickname);
+        }
+        if(!file.isEmpty()) {
+            String profileImageUrl = s3Uploader.uploadFile(file);
+            user.setProfileImageUrl(profileImageUrl);
+        }
+
+        return responseDto.success("변경 성공");
+    }
+
+    public ResponseDto.Default updatePassword(UserRequestDto.UpdatePassword updatePassword, String email) {
+        User user = findByEmail(email);
+        if(user == null) {
+            return responseDto.fail("존재하지 않는 유저 이메일", HttpStatus.NOT_FOUND);
+        }
+
+        if(!passwordEncoder.matches(updatePassword.getCurrentPassword(), user.getPassword())) {
+            return responseDto.fail("비밀번호 불일치", HttpStatus.CONFLICT);
+        }
+
+        user.setPassword(passwordEncoder.encode(updatePassword.getNewPassword()));
+        return responseDto.success("비밀번호 변경 성공");
     }
 
 }

@@ -31,3 +31,14 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA6LGEKMXDY6DDVPTG
+      secret-key: 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
+    stack:
+      auto: false
+    s3:
+      bucket: turi-bucket
+    region:
+      static: ap-northeast-2

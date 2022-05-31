@@ -1,6 +1,6 @@
 package com.turi.turi0411.controller;
 
-import com.turi.turi0411.dto.UserRequestDto;
+import com.turi.turi0411.dto.user.UserRequestDto;
 import com.turi.turi0411.dto.ResponseDto;
 import com.turi.turi0411.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,12 @@ public class UserController {
             SecurityContextHolder.clearContext();
         }
         return responseDto.success("로그아웃 성공");
+    }
+
+    @PutMapping("/update-info")
+    public ResponseDto.Default updateUserInfo(@RequestParam MultipartFile file, @RequestParam String nickname) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.updateUserInfo(file, nickname, email);
     }
 
     @GetMapping("/test")

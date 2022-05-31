@@ -6,6 +6,7 @@ import lombok.Setter;
 
 public class PostResponseDto {
 
+    // 아마 디테일뷰
     @Setter
     @Getter
     @Builder
