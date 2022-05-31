@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/update-info")
-    public ResponseDto.Default updateUserInfo(@RequestParam MultipartFile file, @RequestParam HashMap<String, Object> data) {
+    public ResponseDto.Default updateUserInfo(@RequestPart(required=false) MultipartFile file, @RequestPart(required=false) HashMap<String, Object> data) {
         System.out.println("여기는 update-info");
         String nickname = data.get("nickname").toString();
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
