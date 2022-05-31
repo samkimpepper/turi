@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,7 +49,9 @@ public class UserController {
     }
 
     @PutMapping("/update-info")
-    public ResponseDto.Default updateUserInfo(@RequestParam MultipartFile file, @RequestParam String nickname) {
+    public ResponseDto.Default updateUserInfo(@RequestParam MultipartFile file, @RequestParam HashMap<String, Object> data) {
+        System.out.println("여기는 update-info");
+        String nickname = data.get("nickname").toString();
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.updateUserInfo(file, nickname, email);
     }
