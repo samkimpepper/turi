@@ -1,4 +1,4 @@
-package com.turi.turi0411.dto;
+package com.turi.turi0411.dto.post;
 
 import lombok.Getter;
 import lombok.Setter;

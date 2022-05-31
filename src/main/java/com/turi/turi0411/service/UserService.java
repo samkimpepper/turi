@@ -35,6 +35,10 @@ public class UserService{
                 .auth("ROLE_USER")
                 .build();
 
+        if(userRepository.existsByEmail(signUp.getEmail())) {
+            return responseDto.fail("이미 존재하는 이메일", HttpStatus.CONFLICT);
+        }
+
         userRepository.save(user);
         return ResponseDto.Default.builder()
                 .state(HttpStatus.OK.value())
