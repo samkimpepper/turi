@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PostSearchDto {
+    private Long postId;
     private String content;
     private String postType;
     private String roadAddress;
@@ -18,6 +19,7 @@ public class PostSearchDto {
 
     public static PostSearchDto postToDto(Post post) {
         return PostSearchDto.builder()
+                .postId(post.getId())
                 .content(post.getContent())
                 .postType(post.getType().name())
                 .roadAddress(post.getRoadAddress())

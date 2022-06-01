@@ -18,6 +18,7 @@ public class PostResponseDto {
         //private String profileImage; 이것도 전달 해야겠지?..
         private String content;
         private String postType;
+        private String postImageUrl;
         private List<PostCommentDto> commentList;
     }
 }

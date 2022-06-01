@@ -94,6 +94,7 @@ public class PostService {
                 .nickname(post.getUser().getNickname())
                 .content(post.getContent())
                 .postType(post.getType().name())
+                .postImageUrl(post.getPostImage())
                 .commentList(commentList)
                 .build();
 

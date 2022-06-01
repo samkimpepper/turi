@@ -72,7 +72,7 @@ public class UserService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(login.toAuthentication());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        session.setMaxInactiveInterval(60);
+        session.setMaxInactiveInterval(300);
 
         return responseDto.success("로그인 성공");
     }
