@@ -7,10 +7,7 @@ import com.turi.turi0411.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -24,5 +21,8 @@ public class CommentController {
         return commentService.createComment(save, user.getEmail());
     }
 
-
+    @DeleteMapping("/{commentId}")
+    public ResponseDto.Default delete(@PathVariable(name="commentId") Long commentId) {
+        return commentService.deleteComment(commentId);
+    }
 }

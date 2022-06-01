@@ -1,8 +1,11 @@
 package com.turi.turi0411.dto.post;
 
+import com.turi.turi0411.dto.comment.PostCommentDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 public class PostResponseDto {
 
@@ -15,5 +18,6 @@ public class PostResponseDto {
         //private String profileImage; 이것도 전달 해야겠지?..
         private String content;
         private String postType;
+        private List<PostCommentDto> commentList;
     }
 }

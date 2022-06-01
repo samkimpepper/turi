@@ -2,6 +2,7 @@ package com.turi.turi0411.controller;
 
 import com.turi.turi0411.dto.user.UserRequestDto;
 import com.turi.turi0411.dto.ResponseDto;
+import com.turi.turi0411.exception.NotFoundException;
 import com.turi.turi0411.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,18 @@ public class UserController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.updateUserInfo(file, nickname, email);
     }
+
+    @GetMapping("/update-password")
+    public ResponseDto.Default updatePassword(@RequestBody UserRequestDto.UpdatePassword updatePassword) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.updatePassword(updatePassword, email);
+    }
+//
+//    @GetMapping("/post/{email}")
+//    public ResponseDto.DataList<T> getUserPostsList(@PathVariable(name="email") String email) {
+//
+//    }
+
 
     @GetMapping("/test")
     public ResponseDto.Default test(HttpServletRequest request) {

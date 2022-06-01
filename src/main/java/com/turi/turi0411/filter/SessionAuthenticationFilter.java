@@ -19,7 +19,7 @@ import java.util.Enumeration;
 @Slf4j
 public class SessionAuthenticationFilter extends OncePerRequestFilter {
     private static final String SESSION_ID = "loginUser";
-    private static final String[] whitelist = {"/", "/test", "/user/signup", "/user/login", "/user/logout", "/css/*", "/*.ico"};
+    private static final String[] whitelist = {"/", "/test/*", "/user/signup", "/user/login", "/user/logout", "/css/*", "/*.ico"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

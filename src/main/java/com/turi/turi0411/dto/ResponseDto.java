@@ -18,6 +18,12 @@ public class ResponseDto {
         private int state;
         private String message;
         private Object data;
+
+        public Default(int state, String msg, Object data) {
+            this.state = state;
+            this.message = msg;
+            this.data = data;
+        }
     }
 
     @Getter

@@ -29,6 +29,12 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private PostType type;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="place_id")
+    private Place place;
+
+    private String postImage;
+
     private float x;
 
     private float y;

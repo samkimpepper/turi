@@ -1,5 +1,6 @@
 package com.turi.turi0411.config.s3;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -39,6 +40,15 @@ public class S3Uploader {
         }
 
         return amazonS3Client.getUrl(bucket, newFileName).toString();
+    }
+
+    public void deleteFile(String fileName) {
+        log.info("파일 삭제. 파일 이름: " + fileName);
+        try {
+            amazonS3Client.deleteObject(bucket, (fileName).replace(File.separatorChar, '/'));
+        } catch(AmazonServiceException ex) {
+            System.err.println(ex.getErrorMessage());
+        }
     }
 
 

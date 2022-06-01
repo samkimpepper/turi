@@ -95,6 +95,11 @@ public class UserService{
         }
         if(!file.isEmpty()) {
             String profileImageUrl = s3Uploader.uploadFile(file);
+
+            if(user.getProfileImageUrl() != null) {
+                s3Uploader.deleteFile(user.getProfileImageUrl());
+            }
+
             user.setProfileImageUrl(profileImageUrl);
         }
 

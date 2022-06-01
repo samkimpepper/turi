@@ -18,4 +18,9 @@ public class PostRequestDto {
         private String jibunAddress;
         private String placeName;
     }
+
+    @Getter
+    public static class Delete {
+        private Long postId;
+    }
 }
