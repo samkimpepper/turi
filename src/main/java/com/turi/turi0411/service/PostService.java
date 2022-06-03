@@ -92,6 +92,7 @@ public class PostService {
 
         PostResponseDto.Single single = PostResponseDto.Single.builder()
                 .nickname(post.getUser().getNickname())
+                .profileImageUrl(post.getUser().getProfileImageUrl())
                 .content(post.getContent())
                 .postType(post.getType().name())
                 .postImageUrl(post.getPostImage())

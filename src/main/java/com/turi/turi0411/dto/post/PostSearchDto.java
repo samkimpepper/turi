@@ -12,6 +12,7 @@ public class PostSearchDto {
     private Long postId;
     private String content;
     private String postType;
+    private String postImageUrl;
     private String roadAddress;
     private String placeName;
     private float x;
@@ -22,6 +23,7 @@ public class PostSearchDto {
                 .postId(post.getId())
                 .content(post.getContent())
                 .postType(post.getType().name())
+                .postImageUrl(post.getPostImage())
                 .roadAddress(post.getRoadAddress())
                 .placeName(post.getPlaceName())
                 .x(post.getX())

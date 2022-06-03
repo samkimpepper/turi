@@ -15,7 +15,7 @@ public class PostResponseDto {
     @Builder
     public static class Single {
         private String nickname;
-        //private String profileImage; 이것도 전달 해야겠지?..
+        private String profileImageUrl;
         private String content;
         private String postType;
         private String postImageUrl;
