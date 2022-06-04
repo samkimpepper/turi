@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class Turi0411Application {
 
     public static void main(String[] args) {
+        System.out.println(org.hibernate.Version.getVersionString());
         SpringApplication.run(Turi0411Application.class, args);
     }
 

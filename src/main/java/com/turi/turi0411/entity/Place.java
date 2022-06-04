@@ -1,15 +1,14 @@
 package com.turi.turi0411.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Place {
@@ -19,12 +18,15 @@ public class Place {
 
     private String placeName;
 
+    @Column(columnDefinition = "geometry")
+    private Point location;
+
     @Column(unique = true)
     private String roadAddress;
 
     private String jibunAddress;
 
-    private float x;
+    private double x;
 
-    private float y;
+    private double y;
 }

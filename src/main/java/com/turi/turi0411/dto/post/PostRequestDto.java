@@ -12,8 +12,8 @@ public class PostRequestDto {
         private String content;
         private String postType;
         //private MultipartFile[] images;
-        private float x;
-        private float y;
+        private double x;
+        private double y;
         private String roadAddress;
         private String jibunAddress;
         private String placeName;

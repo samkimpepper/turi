@@ -11,6 +11,7 @@ import com.turi.turi0411.exception.NotFoundException;
 import com.turi.turi0411.repository.PlaceRepository;
 import com.turi.turi0411.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.io.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,16 +31,25 @@ public class PostService {
     private final UserService userService;
 
     @Transactional
-    public ResponseDto.Default create(PostRequestDto.Save save, User user) {
+    public ResponseDto.Default create(PostRequestDto.Save save, User user) throws ParseException {
         String postType = save.getPostType();
         if(!postType.equals("food") && !postType.equals("enjoy") && !postType.equals("stay")) {
             return responseDto.fail("postType 값이 잘못됐음: " + postType, HttpStatus.BAD_REQUEST);
         }
 
+        Place place = placeService.create(Place.builder()
+                .placeName(save.getPlaceName())
+                .roadAddress(save.getRoadAddress())
+                .jibunAddress(save.getJibunAddress())
+                .x(save.getX())
+                .y(save.getY())
+                .build());
+
         Post post = Post.builder()
                 .user(user)
                 .content(save.getContent())
                 .type(PostType.valueOf(postType))
+                .place(place)
                 .placeName(save.getPlaceName())
                 .roadAddress(save.getRoadAddress())
                 .jibunAddress(save.getJibunAddress())
@@ -52,15 +62,15 @@ public class PostService {
         return responseDto.success("post 등록 성공");
     }
 
-    public ResponseDto.Default create2(HashMap<String, Object> data, String email) {
+    public ResponseDto.Default create2(HashMap<String, Object> data, String email) throws ParseException {
         User user = userService.findByEmail(email);
 
         Place place = placeService.create(PlaceDto.builder()
                 .placeName(data.get("placeName").toString())
                 .jibunAddress(data.get("jibunAddress").toString())
                 .roadAddress(data.get("roadAddress").toString())
-                .x(Float.parseFloat(data.get("x").toString()))
-                .y(Float.parseFloat(data.get("y").toString()))
+                .x(Double.parseDouble(data.get("x").toString()))
+                .y(Double.parseDouble(data.get("y").toString()))
                 .build());
 
         Post post = Post.builder()
@@ -112,6 +122,8 @@ public class PostService {
                 })
                 .collect(Collectors.toList());
     }
+
+
 
     public ResponseDto.Default deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("존재하지 않는 포스트"));

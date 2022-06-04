@@ -35,9 +35,9 @@ public class Post extends BaseTimeEntity {
 
     private String postImage;
 
-    private float x;
+    private double x;
 
-    private float y;
+    private double y;
 
     private String roadAddress;
 

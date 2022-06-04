@@ -8,6 +8,7 @@ import com.turi.turi0411.entity.User;
 import com.turi.turi0411.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.io.ParseException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,12 @@ public class PostController {
 
     @PostMapping()
     public ResponseDto.Default create(@RequestBody PostRequestDto.Save save,
-                                      @AuthenticationPrincipal User user) {
+                                      @AuthenticationPrincipal User user) throws ParseException {
         return postService.create(save, user);
     }
 
     @PostMapping("/create2")
-    public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart HashMap<String, Object> data) {
+    public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart HashMap<String, Object> data) throws ParseException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return postService.create2(data, email);
     }

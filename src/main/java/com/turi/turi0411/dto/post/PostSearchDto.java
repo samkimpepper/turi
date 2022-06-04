@@ -15,8 +15,8 @@ public class PostSearchDto {
     private String postImageUrl;
     private String roadAddress;
     private String placeName;
-    private float x;
-    private float y;
+    private double x;
+    private double y;
 
     public static PostSearchDto postToDto(Post post) {
         return PostSearchDto.builder()

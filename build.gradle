@@ -45,6 +45,10 @@ dependencies {
     // AWS s3
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 
+    // 사용자 실제 위치 기반 데이터 조회 연산 위해..
+    implementation 'org.hibernate:hibernate-spatial:5.6.5.Final'
+
+
 }
 
 tasks.named('test') {

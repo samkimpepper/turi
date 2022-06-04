@@ -13,11 +13,13 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        #dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
         format_sql: true
         #temp:
           #use_jdbc_metadata_defaults: false
     generate-ddl: true
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
   session:
     jdbc:
       initialize-schema: always
