@@ -135,7 +135,6 @@ public class PostService {
     }
 
 
-
     public ResponseDto.Default deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("존재하지 않는 포스트"));
 
@@ -149,6 +148,19 @@ public class PostService {
 
         int likeCount = post.increaseLikeCount();
         return responseDto.success("좋아요 처리 성공");
+    }
+
+    public List<PostSearchDto> getSamePlacePost(Long placeId) {
+        Place place = placeService.findById(placeId);
+
+        List<Post> results = postRepository.findAllByPlace(place);
+
+        List<PostSearchDto> postSearchDtos = results.stream()
+                .map(post -> {
+                    return PostSearchDto.postToDto(post);
+                })
+                .collect(Collectors.toList());
+        return postSearchDtos;
     }
 
 }

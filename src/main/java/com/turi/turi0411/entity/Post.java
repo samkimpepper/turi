@@ -47,6 +47,9 @@ public class Post extends BaseTimeEntity {
 
     private int likeCount;
 
+    // 0~5만
+    private int rating;
+
     public int increaseLikeCount() {
         return ++likeCount;
     }

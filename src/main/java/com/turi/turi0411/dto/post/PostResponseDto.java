@@ -19,6 +19,7 @@ public class PostResponseDto {
         private String content;
         private String postType;
         private String postImageUrl;
+        private int rating;
         private List<PostCommentDto> commentList;
     }
 }

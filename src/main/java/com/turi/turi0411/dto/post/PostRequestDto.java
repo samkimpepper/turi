@@ -17,6 +17,7 @@ public class PostRequestDto {
         private String roadAddress;
         private String jibunAddress;
         private String placeName;
+        private int rating;
     }
 
     @Getter

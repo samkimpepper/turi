@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class PlaceDto {
+    private Long placeId;
     private String placeName;
     private String roadAddress;
     private String jibunAddress;
@@ -16,6 +17,7 @@ public class PlaceDto {
 
     public static PlaceDto placeToDto(Place place) {
         return PlaceDto.builder()
+                .placeId(place.getId())
                 .placeName(place.getPlaceName())
                 .roadAddress(place.getRoadAddress())
                 .jibunAddress(place.getJibunAddress())

@@ -17,17 +17,19 @@ public class PostSearchDto {
     private String placeName;
     private double x;
     private double y;
+    private int rating;
 
     public static PostSearchDto postToDto(Post post) {
         return PostSearchDto.builder()
                 .postId(post.getId())
                 .content(post.getContent())
                 .postType(post.getType().name())
-                .postImageUrl(post.getPostImage())
+                .postImageUrl(post.getPostImageUrl())
                 .roadAddress(post.getRoadAddress())
                 .placeName(post.getPlaceName())
                 .x(post.getX())
                 .y(post.getY())
+                .rating(post.getRating())
                 .build();
     }
 }

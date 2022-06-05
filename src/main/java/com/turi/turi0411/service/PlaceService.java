@@ -99,4 +99,8 @@ public class PlaceService {
                 .collect(Collectors.toList());
         return data;
     }
+
+    public Place findById(Long placeId) {
+        return placeRepository.findById(placeId).orElseThrow(() -> new NotFoundException("존재하지 않는 장소"));
+    }
 }

@@ -55,5 +55,8 @@ public class PostController {
         return postService.postLike(postId);
     }
 
-
+    @GetMapping("/place/{placeId}")
+    public ResponseDto.DataList<PostSearchDto> getSamePlacePost(@PathVariable(name="placeId") Long placeId) {
+        return new ResponseDto.DataList<>(postService.getSamePlacePost(placeId), "same place");
+    }
 }
