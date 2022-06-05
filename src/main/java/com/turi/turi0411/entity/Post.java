@@ -33,7 +33,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name="place_id")
     private Place place;
 
-    private String postImage;
+    private String postImageUrl;
 
     private double x;
 
@@ -44,5 +44,11 @@ public class Post extends BaseTimeEntity {
     private String jibunAddress;
 
     private String placeName;
+
+    private int likeCount;
+
+    public int increaseLikeCount() {
+        return ++likeCount;
+    }
 
 }

@@ -32,7 +32,7 @@ public class PostController {
     @PostMapping("/create2")
     public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart HashMap<String, Object> data) throws ParseException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return postService.create2(data, email);
+        return postService.create2(file, data, email);
     }
 
     @GetMapping("/{postId}")
@@ -48,6 +48,11 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseDto.Default delete(@PathVariable(name ="postId") Long postId) {
         return postService.deletePost(postId);
+    }
+
+    @PutMapping("/like/{postId}")
+    public ResponseDto.Default postLike(@PathVariable(name="postId") Long postId) {
+        return postService.postLike(postId);
     }
 
 

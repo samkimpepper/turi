@@ -2,6 +2,7 @@ package com.turi.turi0411.service;
 
 import com.turi.turi0411.dto.post.PlaceDto;
 import com.turi.turi0411.entity.Place;
+import com.turi.turi0411.entity.PostType;
 import com.turi.turi0411.exception.NotFoundException;
 import com.turi.turi0411.repository.PlaceRepository;
 import com.turi.turi0411.util.CardinalDirection;
@@ -67,7 +68,10 @@ public class PlaceService {
         return place;
     }
 
-    public List<PlaceDto> getNearPlaces(double x, double y) {
+    public List<PlaceDto> getNearPlaces(double x, double y, String type) {
+
+        PostType postType = PostType.valueOf(type);
+
 //        double baseLat = 37.5099490;
 //        double baseLong = 127.1090094;
         double baseLat = y;
@@ -85,8 +89,9 @@ public class PlaceService {
         Query query = entityManager.createNativeQuery("" +
                         "SELECT * \n" +
                         "FROM place AS p \n" +
-                        "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2) + ", p.location)"
-                , Place.class);
+                        "WHERE p.type = :type AND " +
+                        "MBRContains(ST_LINESTRINGFROMTEXT(" + String.format("'LINESTRING(%f %f, %f %f)')", x1, y1, x2, y2) + ", p.location)"
+                , Place.class).setParameter("type", type);
 
         List<Place> results = query.getResultList();
         List<PlaceDto> data = results.stream()

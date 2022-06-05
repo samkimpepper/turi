@@ -12,6 +12,7 @@ public class PlaceDto {
     private String jibunAddress;
     private double x;
     private double y;
+    private String placeType;
 
     public static PlaceDto placeToDto(Place place) {
         return PlaceDto.builder()
@@ -20,6 +21,7 @@ public class PlaceDto {
                 .jibunAddress(place.getJibunAddress())
                 .x(place.getX())
                 .y(place.getY())
+                .placeType(place.getType().name())
                 .build();
     }
 }

@@ -16,9 +16,9 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping("/near")
-    public ResponseDto.DataList<PlaceDto> getNearPlaces(@RequestParam("x") String x, @RequestParam("y") String y) {
+    public ResponseDto.DataList<PlaceDto> getNearPlaces(@RequestParam("x") String x, @RequestParam("y") String y, @RequestParam("type") String type) {
         double doublex = Double.parseDouble(x);
         double doubley = Double.parseDouble(y);
-        return new ResponseDto.DataList<>(placeService.getNearPlaces(doublex, doubley), "가까운 장소들");
+        return new ResponseDto.DataList<>(placeService.getNearPlaces(doublex, doubley, type), "가까운 장소들");
     }
 }

@@ -29,4 +29,7 @@ public class Place {
     private double x;
 
     private double y;
+
+    @Enumerated(EnumType.STRING)
+    private PostType type;
 }

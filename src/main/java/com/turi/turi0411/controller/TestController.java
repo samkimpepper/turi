@@ -23,7 +23,7 @@ public class TestController {
 
     @GetMapping("/location")
     public ResponseDto.DataList<PlaceDto> mbrTest() {
-        return new ResponseDto.DataList<>(placeService.getNearPlaces(127.1090094, 37.5099490), "가까운 장소들");
+        return new ResponseDto.DataList<>(placeService.getNearPlaces(127.1090094, 37.5099490, "food"), "가까운 장소들");
     }
 
 }
