@@ -69,10 +69,12 @@ public class PostService {
 
     public ResponseDto.Default create2(MultipartFile file, HashMap<String, Object> data, String email) {
         User user = userService.findByEmail(email);
+        System.out.println("PostService 내부\n");
 
         String postImageUrl = null;
         if(!file.isEmpty()) {
             postImageUrl = s3Uploader.uploadFile(file);
+            System.out.println("PostService 내부 s3uploader 이후\n");
         }
 
 
@@ -84,6 +86,7 @@ public class PostService {
                 .y(Double.parseDouble(data.get("y").toString()))
                 .placeType(data.get("postType").toString())
                 .build());
+        System.out.println("PostService 내부 place 생성 이후\n");
 
         Post post = Post.builder()
                 .content(data.get("content").toString())
@@ -93,6 +96,7 @@ public class PostService {
                 .rating(0)
                 .likeCount(0)
                 .build();
+        System.out.println("PostService 내부 post 빌더 생성 이후\n");
 
         postRepository.save(post);
 

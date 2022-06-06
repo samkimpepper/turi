@@ -29,8 +29,9 @@ public class PostController {
 //    }
 
     @PostMapping("/create2")
-    public ResponseDto.Default create2(@RequestPart() MultipartFile file, @RequestPart("data") HashMap<String, Object> data) {
+    public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart("data") HashMap<String, Object> data) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("PostController 생성 이후\n");
         return postService.create2(file, data, email);
     }
 
