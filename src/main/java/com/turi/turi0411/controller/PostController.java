@@ -23,14 +23,13 @@ import java.util.HashMap;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping()
-    public ResponseDto.Default create(@RequestBody PostRequestDto.Save save,
-                                      @AuthenticationPrincipal User user) throws ParseException {
-        return postService.create(save, user);
-    }
+//    @PostMapping("/image")
+//    public ResponseDto.Default create(@RequestBody PostRequestDto.Save save) throws ParseException {
+//        return postService.create(save, user);
+//    }
 
     @PostMapping("/create2")
-    public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart HashMap<String, Object> data) throws ParseException {
+    public ResponseDto.Default create2(@RequestPart() MultipartFile file, @RequestPart("data") HashMap<String, Object> data) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return postService.create2(file, data, email);
     }

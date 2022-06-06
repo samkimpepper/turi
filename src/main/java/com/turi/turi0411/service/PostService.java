@@ -82,6 +82,7 @@ public class PostService {
                 .roadAddress(data.get("roadAddress").toString())
                 .x(Double.parseDouble(data.get("x").toString()))
                 .y(Double.parseDouble(data.get("y").toString()))
+                .placeType(data.get("postType").toString())
                 .build());
 
         Post post = Post.builder()
@@ -89,6 +90,8 @@ public class PostService {
                 .user(user)
                 .place(place)
                 .postImageUrl(postImageUrl)
+                .rating(0)
+                .likeCount(0)
                 .build();
 
         postRepository.save(post);

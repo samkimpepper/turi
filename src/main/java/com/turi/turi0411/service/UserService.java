@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -84,14 +85,15 @@ public class UserService{
 
     // 프사, 닉네임 변경
     @Transactional
-    public ResponseDto.Default updateUserInfo(MultipartFile file, String nickname, String email) {
+    public ResponseDto.Default updateUserInfo(MultipartFile file, HashMap<String, Object> data, String email) {
         User user = findByEmail(email);
         if(user == null) {
             return responseDto.fail("존재하지 않는 유저 이메일", HttpStatus.NOT_FOUND);
         }
 
-        if(nickname != null) {
-            user.setNickname(nickname);
+
+        if(data.get("nickname") != null) {
+            user.setNickname(data.get("nickname").toString());
         }
         if(!file.isEmpty()) {
             String profileImageUrl = s3Uploader.uploadFile(file);
