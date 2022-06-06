@@ -29,7 +29,7 @@ public class PlaceService {
     private final EntityManager entityManager;
 
     @Transactional
-    public Place create(PlaceDto placeDto) throws ParseException {
+    public Place create(PlaceDto placeDto) {
         if(placeRepository.existsByRoadAddress(placeDto.getRoadAddress())) {
             Place place = placeRepository.findByRoadAddress(placeDto.getRoadAddress()).orElseThrow(() -> new NotFoundException("존재하지 않는 장소"));
             return place;
@@ -37,7 +37,13 @@ public class PlaceService {
 
 
         String pointWKT = String.format("POINT(%s %s)",placeDto.getX(), placeDto.getY());
-        Point point = (Point) new WKTReader().read(pointWKT);
+        Point point = null;
+        try {
+            point = (Point) new WKTReader().read(pointWKT);
+        } catch(ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
         Place place = Place.builder()
                 .placeName(placeDto.getPlaceName())
@@ -53,7 +59,7 @@ public class PlaceService {
     }
 
     @Transactional
-    public Place create(Place place) throws ParseException {
+    public Place create(Place place) {
         if(placeRepository.existsByRoadAddress(place.getRoadAddress())) {
             place = placeRepository.findByRoadAddress(place.getRoadAddress()).orElseThrow(() -> new NotFoundException("존재하지 않는 장소"));
             return place;
@@ -61,7 +67,14 @@ public class PlaceService {
 
 
         String pointWKT = String.format("POINT(%s %s)",place.getX(), place.getY());
-        Point point = (Point) new WKTReader().read(pointWKT);
+        Point point = null;
+        try {
+            point = (Point) new WKTReader().read(pointWKT);
+        } catch(ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
         place.setLocation(point);
 
         placeRepository.save(place);

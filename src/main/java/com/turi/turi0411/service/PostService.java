@@ -67,13 +67,14 @@ public class PostService {
         return responseDto.success("post 등록 성공");
     }
 
-    public ResponseDto.Default create2(MultipartFile file, HashMap<String, Object> data, String email) throws ParseException {
+    public ResponseDto.Default create2(MultipartFile file, HashMap<String, Object> data, String email) {
         User user = userService.findByEmail(email);
 
         String postImageUrl = null;
         if(!file.isEmpty()) {
             postImageUrl = s3Uploader.uploadFile(file);
         }
+
 
         Place place = placeService.create(PlaceDto.builder()
                 .placeName(data.get("placeName").toString())
