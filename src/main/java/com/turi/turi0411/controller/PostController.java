@@ -25,27 +25,29 @@ import java.util.HashMap;
 public class PostController {
     private final PostService postService;
 
-//    @PostMapping("/image")
-//    public ResponseDto.Default create(@RequestBody PostRequestDto.Save save) throws ParseException {
-//        return postService.create(save, user);
-//    }
-
     @PostMapping("/create2")
     public ResponseDto.Default create2(MultipartHttpServletRequest request) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("PostController 생성 이후\n");
+        System.out.println("PostController create2\n");
         MultipartFile file = request.getFile("file");
-        
+        String placeName = request.getParameter("placeName");
+        String jibunAddress = request.getParameter("jibunAddress");
+        String roadAddress =request.getParameter("roadAddress");
+        String postType = request.getParameter("postType");
+        String content = request.getParameter("content");
+        int rating = Integer.parseInt(request.getParameter("rating"));
+        double x = Double.parseDouble(request.getParameter("x"));
+        double y = Double.parseDouble(request.getParameter("y"));
 
-        return new ResponseDto.Default(HttpStatus.OK.value(), "sibal", null);
+        return postService.create2(file, placeName, jibunAddress, roadAddress, postType, content, rating, x, y, email);
     }
 
-    @PostMapping("/create3")
-    public ResponseDto.Default create3(@RequestPart HashMap<String, Object> data, @RequestPart MultipartFile file) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("PostController 생성 이후\n");
-        return postService.create2(file, data, email);
-    }
+//    @PostMapping("/create3")
+//    public ResponseDto.Default create3(@RequestPart HashMap<String, Object> data, @RequestPart MultipartFile file) {
+//        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+//        System.out.println("PostController 생성 이후\n");
+//        return postService.create2(file, data, email);
+//    }
 
 
     @GetMapping("/{postId}")

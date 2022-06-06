@@ -52,6 +52,7 @@ public class PlaceService {
                 .roadAddress(placeDto.getRoadAddress())
                 .x(placeDto.getX())
                 .y(placeDto.getY())
+                .type(PostType.valueOf(placeDto.getPlaceType()))
                 .build();
 
         placeRepository.save(place);

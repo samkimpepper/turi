@@ -67,7 +67,16 @@ public class PostService {
         return responseDto.success("post 등록 성공");
     }
 
-    public ResponseDto.Default create2(MultipartFile file, HashMap<String, Object> data, String email) {
+    public ResponseDto.Default create2(MultipartFile file,
+                                       String placeName,
+                                       String jibunAddress,
+                                       String roadAddress,
+                                       String postType,
+                                       String content,
+                                       int rating,
+                                       double x,
+                                       double y,
+                                       String email) {
         User user = userService.findByEmail(email);
         System.out.println("PostService 내부\n");
 
@@ -77,23 +86,23 @@ public class PostService {
             System.out.println("PostService 내부 s3uploader 이후\n");
         }
 
-
         Place place = placeService.create(PlaceDto.builder()
-                .placeName(data.get("placeName").toString())
-                .jibunAddress(data.get("jibunAddress").toString())
-                .roadAddress(data.get("roadAddress").toString())
-                .x(Double.parseDouble(data.get("x").toString()))
-                .y(Double.parseDouble(data.get("y").toString()))
-                .placeType(data.get("postType").toString())
+                .placeName(placeName)
+                .jibunAddress(jibunAddress)
+                .roadAddress(roadAddress)
+                .x(x)
+                .y(y)
+                .placeType(postType)
                 .build());
         System.out.println("PostService 내부 place 생성 이후\n");
 
         Post post = Post.builder()
-                .content(data.get("content").toString())
+                .content(content)
                 .user(user)
                 .place(place)
                 .postImageUrl(postImageUrl)
-                .rating(0)
+                .type(PostType.valueOf(postType))
+                .rating(rating)
                 .likeCount(0)
                 .build();
         System.out.println("PostService 내부 post 빌더 생성 이후\n");
