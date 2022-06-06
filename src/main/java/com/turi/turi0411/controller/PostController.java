@@ -9,10 +9,12 @@ import com.turi.turi0411.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.io.ParseException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
 
@@ -29,11 +31,22 @@ public class PostController {
 //    }
 
     @PostMapping("/create2")
-    public ResponseDto.Default create2(@RequestPart MultipartFile file, @RequestPart("data") HashMap<String, Object> data) {
+    public ResponseDto.Default create2(MultipartHttpServletRequest request) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("PostController 생성 이후\n");
+        MultipartFile file = request.getFile("file");
+        
+
+        return new ResponseDto.Default(HttpStatus.OK.value(), "sibal", null);
+    }
+
+    @PostMapping("/create3")
+    public ResponseDto.Default create3(@RequestPart HashMap<String, Object> data, @RequestPart MultipartFile file) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println("PostController 생성 이후\n");
         return postService.create2(file, data, email);
     }
+
 
     @GetMapping("/{postId}")
     public ResponseDto.Data<PostResponseDto.Single> postInfo(@PathVariable(name = "postId") Long postId) {
