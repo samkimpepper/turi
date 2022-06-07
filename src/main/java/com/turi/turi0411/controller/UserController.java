@@ -1,5 +1,6 @@
 package com.turi.turi0411.controller;
 
+import com.turi.turi0411.dto.user.UserInfoDto;
 import com.turi.turi0411.dto.user.UserRequestDto;
 import com.turi.turi0411.dto.ResponseDto;
 import com.turi.turi0411.exception.NotFoundException;
@@ -32,14 +33,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseDto.Default login(@RequestBody UserRequestDto.Login login,
-                                     HttpServletRequest request,
-                                     HttpServletResponse response) {
+    public ResponseDto.Data<UserInfoDto> login(@RequestBody UserRequestDto.Login login,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response) {
         return userService.login(login, request, response);
 
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseDto.Default logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if(session != null) {
@@ -62,6 +63,7 @@ public class UserController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.updatePassword(updatePassword, email);
     }
+
 //
 //    @GetMapping("/post/{email}")
 //    public ResponseDto.DataList<T> getUserPostsList(@PathVariable(name="email") String email) {

@@ -1,6 +1,7 @@
 package com.turi.turi0411.service;
 
 import com.turi.turi0411.config.s3.S3Uploader;
+import com.turi.turi0411.dto.user.UserInfoDto;
 import com.turi.turi0411.dto.user.UserRequestDto;
 import com.turi.turi0411.dto.ResponseDto;
 import com.turi.turi0411.entity.User;
@@ -53,18 +54,18 @@ public class UserService{
     }
 
     @Transactional
-    public ResponseDto.Default login(UserRequestDto.Login login,
-                                     HttpServletRequest request,
-                                     HttpServletResponse response) {
+    public ResponseDto.Data<UserInfoDto> login(UserRequestDto.Login login,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response) {
         Optional<User> optionalUser = userRepository.findByEmail(login.getEmail());
         if(!optionalUser.isPresent()) {
-            return responseDto.fail("존재하지 않는 이메일", HttpStatus.NOT_FOUND);
+            return new ResponseDto.Data<>(HttpStatus.NOT_FOUND, "존재하지 않는 이메일");
         }
         User user = optionalUser.get();
 
 
         if(!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
-            return responseDto.fail("비번 틀림", HttpStatus.NOT_FOUND);
+            return new ResponseDto.Data<>(HttpStatus.UNAUTHORIZED, "틀린 비밀번호");
         }
 
         HttpSession session = request.getSession();
@@ -75,7 +76,7 @@ public class UserService{
 
         session.setMaxInactiveInterval(300);
 
-        return responseDto.success("로그인 성공");
+        return new ResponseDto.Data<UserInfoDto>(UserInfoDto.userToDto(user), "로그인 성공");
     }
 
     public User findByEmail(String email) {

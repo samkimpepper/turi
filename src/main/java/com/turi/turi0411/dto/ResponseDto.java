@@ -37,6 +37,12 @@ public class ResponseDto {
             message = msg;
             this.data = data;
         }
+
+        public Data(HttpStatus status, String msg) {
+            state = status.value();
+            message = msg;
+            data = null;
+        }
     }
 
     @Getter
