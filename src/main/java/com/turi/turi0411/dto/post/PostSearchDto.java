@@ -19,6 +19,10 @@ public class PostSearchDto {
     private double y;
     private int rating;
 
+    private String nickname;
+    private String profileImageUrl;
+
+
     public static PostSearchDto postToDto(Post post) {
         return PostSearchDto.builder()
                 .postId(post.getId())
@@ -30,6 +34,8 @@ public class PostSearchDto {
                 .x(post.getX())
                 .y(post.getY())
                 .rating(post.getRating())
+                .nickname(post.getUser().getNickname())
+                .profileImageUrl(post.getUser().getProfileImageUrl())
                 .build();
     }
 }
