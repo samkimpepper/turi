@@ -129,6 +129,7 @@ public class PostService {
                 .collect(Collectors.toList());
 
         PostResponseDto.Single single = PostResponseDto.Single.builder()
+                .postId(post.getId())
                 .nickname(post.getUser().getNickname())
                 .profileImageUrl(post.getUser().getProfileImageUrl())
                 .content(post.getContent())

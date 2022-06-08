@@ -14,6 +14,7 @@ public class PostResponseDto {
     @Getter
     @Builder
     public static class Single {
+        private Long postId;
         private String nickname;
         private String profileImageUrl;
         private String content;
