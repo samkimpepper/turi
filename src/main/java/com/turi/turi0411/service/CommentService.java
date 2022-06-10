@@ -53,6 +53,12 @@ public class CommentService {
         return responseDto.success("댓글 삭제 성공");
     }
 
+    public boolean deleteAllByPost(Post post) {
+        List<Comment> comments = commentRepository.findAllByPost(post);
+        commentRepository.deleteAllByPost(post);
+        return true;
+    }
+
     public List<Comment> findAllByPost(Post post) {
         return commentRepository.findAllByPost(post);
     }

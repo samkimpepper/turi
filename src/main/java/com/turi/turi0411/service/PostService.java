@@ -157,6 +157,8 @@ public class PostService {
     public ResponseDto.Default deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("존재하지 않는 포스트"));
 
+        commentService.deleteAllByPost(post);
+
         postRepository.delete(post);
         return responseDto.success("포스트 삭제 성공");
     }
