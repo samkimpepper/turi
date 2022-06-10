@@ -2,20 +2,19 @@ package com.turi.turi0411.service;
 
 import com.turi.turi0411.config.s3.S3Uploader;
 import com.turi.turi0411.dto.comment.PostCommentDto;
-import com.turi.turi0411.dto.post.PlaceDto;
-import com.turi.turi0411.dto.post.PostRequestDto;
-import com.turi.turi0411.dto.post.PostResponseDto;
+import com.turi.turi0411.dto.post.*;
 import com.turi.turi0411.dto.ResponseDto;
-import com.turi.turi0411.dto.post.PostSearchDto;
 import com.turi.turi0411.entity.*;
 import com.turi.turi0411.exception.NotFoundException;
 import com.turi.turi0411.repository.PlaceRepository;
 import com.turi.turi0411.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.io.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -131,6 +131,7 @@ public class PostService {
         PostResponseDto.Single single = PostResponseDto.Single.builder()
                 .postId(post.getId())
                 .nickname(post.getUser().getNickname())
+                .email(post.getUser().getEmail())
                 .profileImageUrl(post.getUser().getProfileImageUrl())
                 .content(post.getContent())
                 .postType(post.getType().name())
@@ -158,6 +159,35 @@ public class PostService {
 
         postRepository.delete(post);
         return responseDto.success("포스트 삭제 성공");
+    }
+
+    @Transactional
+    public PostDetailDto modifyPost(PostRequestDto.Modify modify) {
+        Post post = postRepository.findById(modify.getPostId()).orElseThrow(() -> new NotFoundException("존재하지 않는 포스트"));
+
+        if(StringUtils.hasText(modify.getContent())) {
+            post.setContent(modify.getContent());
+        }
+
+        //rating도 해야되는데...
+
+        if(StringUtils.hasText(modify.getPlaceName())) {
+            Place place = placeService.create(PlaceDto.builder()
+                    .placeName(modify.getPlaceName())
+                    .placeType(modify.getPostType())
+                    .roadAddress(modify.getRoadAddress())
+                    .jibunAddress(modify.getJibunAddress())
+                    .x(modify.getX())
+                    .y(modify.getY())
+                    .build());
+
+            post.setPlace(place);
+            log.info("modify post success.");
+        }
+
+        List<Comment> comments = commentService.findAllByPost(post);
+
+        return PostDetailDto.PostToDto(post, comments);
     }
 
     @Transactional

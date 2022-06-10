@@ -20,7 +20,15 @@ public class PostRequestDto {
     }
 
     @Getter
-    public static class Delete {
+    public static class Modify {
         private Long postId;
+        private String postType;
+        private String content;
+        private double x;
+        private double y;
+        private String roadAddress;
+        private String jibunAddress;
+        private String placeName;
+        private int rating;
     }
 }

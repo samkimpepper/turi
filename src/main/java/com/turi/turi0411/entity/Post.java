@@ -1,9 +1,6 @@
 package com.turi.turi0411.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post extends BaseTimeEntity {

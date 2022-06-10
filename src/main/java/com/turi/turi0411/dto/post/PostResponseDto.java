@@ -16,6 +16,7 @@ public class PostResponseDto {
     public static class Single {
         private Long postId;
         private String nickname;
+        private String email;
         private String profileImageUrl;
         private String content;
         private String postType;

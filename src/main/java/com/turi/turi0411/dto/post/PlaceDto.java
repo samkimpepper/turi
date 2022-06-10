@@ -26,4 +26,5 @@ public class PlaceDto {
                 .placeType(place.getType().name())
                 .build();
     }
+
 }

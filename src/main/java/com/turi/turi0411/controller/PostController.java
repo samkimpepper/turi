@@ -1,5 +1,6 @@
 package com.turi.turi0411.controller;
 
+import com.turi.turi0411.dto.post.PostDetailDto;
 import com.turi.turi0411.dto.post.PostRequestDto;
 import com.turi.turi0411.dto.post.PostResponseDto;
 import com.turi.turi0411.dto.ResponseDto;
@@ -49,7 +50,6 @@ public class PostController {
 //        return postService.create2(file, data, email);
 //    }
 
-
     @GetMapping("/{postId}")
     public ResponseDto.Data<PostResponseDto.Single> postInfo(@PathVariable(name = "postId") Long postId) {
         return new ResponseDto.Data<>(postService.postInfo(postId), "성공");
@@ -63,6 +63,11 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseDto.Default delete(@PathVariable(name ="postId") Long postId) {
         return postService.deletePost(postId);
+    }
+
+    @PutMapping
+    public ResponseDto.Data<PostDetailDto> modify(@RequestBody PostRequestDto.Modify modify) {
+        return new ResponseDto.Data<>(postService.modifyPost(modify), "수정 성공");
     }
 
     @PutMapping("/like/{postId}")

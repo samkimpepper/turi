@@ -35,7 +35,6 @@ public class PlaceService {
             return place;
         }
 
-
         String pointWKT = String.format("POINT(%s %s)",placeDto.getX(), placeDto.getY());
         Point point = null;
         try {
