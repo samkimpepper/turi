@@ -154,6 +154,7 @@ public class PostService {
     }
 
 
+
     public ResponseDto.Default deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("존재하지 않는 포스트"));
 
