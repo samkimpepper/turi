@@ -113,6 +113,19 @@ public class PlaceService {
         return data;
     }
 
+    public List<PlaceDto> getPlaceSearchResult(String keyword, String type) {
+        PostType postType = PostType.valueOf(type);
+
+
+        List<Place> results = placeRepository.findAllByRoadAddressContainingAndTypeEquals(keyword, postType);
+
+        return results.stream()
+                .map(place -> {
+                    return PlaceDto.placeToDto(place);
+                })
+                .collect(Collectors.toList());
+    }
+
     public Place findById(Long placeId) {
         return placeRepository.findById(placeId).orElseThrow(() -> new NotFoundException("존재하지 않는 장소"));
     }
