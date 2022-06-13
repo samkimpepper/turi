@@ -1,10 +1,7 @@
 package com.turi.turi0411.controller;
 
-import com.turi.turi0411.dto.post.PostDetailDto;
-import com.turi.turi0411.dto.post.PostRequestDto;
-import com.turi.turi0411.dto.post.PostResponseDto;
+import com.turi.turi0411.dto.post.*;
 import com.turi.turi0411.dto.ResponseDto;
-import com.turi.turi0411.dto.post.PostSearchDto;
 import com.turi.turi0411.entity.User;
 import com.turi.turi0411.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -78,5 +75,11 @@ public class PostController {
     @GetMapping("/place/{placeId}")
     public ResponseDto.DataList<PostSearchDto> getSamePlacePost(@PathVariable(name="placeId") Long placeId) {
         return new ResponseDto.DataList<>(postService.getSamePlacePost(placeId), "same place");
+    }
+
+    @GetMapping("/my")
+    public ResponseDto.DataList<MyPostDto> getMyPostList() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseDto.DataList<>(postService.getMyPostList(email), "내가 쓴 포스트 목록");
     }
 }

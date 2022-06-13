@@ -214,4 +214,16 @@ public class PostService {
         return postSearchDtos;
     }
 
+    public List<MyPostDto> getMyPostList(String email) {
+        User user = userService.findByEmail(email);
+
+        List<Post> results = postRepository.findAllByUser(user);
+
+        List<MyPostDto> myPostDtos = results.stream()
+                .map(post -> {
+                    return MyPostDto.postToDto(post);
+                })
+                .collect(Collectors.toList());
+        return myPostDtos;
+    }
 }
