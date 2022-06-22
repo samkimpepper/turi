@@ -36,7 +36,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
-    // contains 에러 때문에..
+    // jpa contains 에러 때문에 버전 낮춤
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa") {
         exclude group: "org.hibernate", module: "hibernate-core"
     }
@@ -45,9 +45,8 @@ dependencies {
     // AWS s3
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 
-    // 사용자 실제 위치 기반 데이터 조회 연산 위해..
+    // MySQL MBR
     implementation 'org.hibernate:hibernate-spatial:5.6.5.Final'
-
 
 }
 
